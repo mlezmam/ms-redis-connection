@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Listener para ver errores de Logback en la consola -->
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+
+    <!-- Nombre del microservicio (opcional) -->
+    <property name="filename" value="ms-plp-search"/>
+
+    <!-- Appender principal para Cloud Run: stdout -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%cyan(%thread)] %magenta(%logger{36}) [%blue(%X{traceId})]: %msg%n%throwable
+            </Pattern>
+            <outputPatternAsHeader>false</outputPatternAsHeader>
+        </encoder>
+    </appender>
+
+    <!-- Async wrapper for performance -->
+    <appender name="AsyncConsole" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>20000</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <neverBlock>true</neverBlock>
+        <includeCallerData>false</includeCallerData>
+        <appender-ref ref="Console"/>
+    </appender>
+
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="AsyncConsole"/>
+    </root>
+
+</configuration>

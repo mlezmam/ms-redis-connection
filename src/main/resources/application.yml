@@ -1,0 +1,76 @@
+server:
+  port: ${PORT:8084}
+  servlet:
+    context-path: /api/v1
+
+spring:
+  config:
+    import:
+      - classpath:application-commons.yml
+      - optional:classpath:application-commons-${spring.profiles.active}.yml
+  data:
+    mongodb:
+      uri: ${MONGO_URI:mongodb+srv://APL_SEARCHREPLACEMENTQAS2:ApL_QA2_S3ARCHR3PL4C3M3NTQ4S2@gcp-searchreplacementqa.y94yb.mongodb.net/SEARCHREPLACEMENTQAS2?minPoolSize=10&maxPoolSize=20&connectTimeoutMS=60000&retryWrites=true&w=majority}
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      lettuce:
+        pool:
+          max-active: ${REDIS_POOL_MAX_ACTIVE:25}
+          max-idle: ${REDIS_POOL_MAX_IDLE:25}
+          min-idle: ${REDIS_POOL_MIN_IDLE:10}
+          max-wait: ${REDIS_POOL_MAX_WAIT:500}
+      timeout: ${REDIS_TIMEOUT:5000}
+      ssl:
+        enabled: ${REDIS_SSL_ENABLED:false}
+  security:
+    user:
+      name: ${USER_NAME_SECURITY:212L234xdd=?sa1$3LLM#04252025}
+      password: ${PASSWORD_SECURITY:323&=?!2212LOS2sde#3as3sad32}
+  application:
+    name: ms-plp-search
+
+app:
+  scheduler:
+    mongo-fixed-rate-ms: ${MONGO_FIXED_RATE_MS:180000}
+
+
+lp:
+  cache:
+    enabled: false
+
+# Documentación Swagger/OpenAPI disponible en /swagger-ui.html
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+#Config for topsort
+api:
+  topsort:
+    text: Bearer
+    apikey:
+      lp: TSE_6U5tfdgPlF3esp4lb8DyyTBNUuhnK528yYWZ
+      sb: TSE_3aAUvPpFuGFSD2C6gyutnDjDX4q8Qi4Azh7S
+    retail-media: ${TOPSORT_RETAIL_MEDIA:https://api.topsort.com/v2}
+  product:
+    estimated-inventory: ${PRODUCT_ESTIMATED_INVENTORY:https://fechaestimada-inventory-plp-qa.liverpool.com.mx}
+
+resilience4j:
+  circuitbreaker:
+    circuit-breaker-aspect-order: 2
+    instances:
+      googleRetailSearch:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
