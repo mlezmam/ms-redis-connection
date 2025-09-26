@@ -4,13 +4,7 @@ server:
     context-path: /api/v1
 
 spring:
-  config:
-    import:
-      - classpath:application-commons.yml
-      - optional:classpath:application-commons-${spring.profiles.active}.yml
   data:
-    mongodb:
-      uri: ${MONGO_URI:mongodb+srv://APL_SEARCHREPLACEMENTQAS2:ApL_QA2_S3ARCHR3PL4C3M3NTQ4S2@gcp-searchreplacementqa.y94yb.mongodb.net/SEARCHREPLACEMENTQAS2?minPoolSize=10&maxPoolSize=20&connectTimeoutMS=60000&retryWrites=true&w=majority}
     redis:
       host: ${REDIS_HOST:127.0.0.1}
       port: ${REDIS_PORT:6379}
@@ -29,18 +23,11 @@ spring:
       name: ${USER_NAME_SECURITY:212L234xdd=?sa1$3LLM#04252025}
       password: ${PASSWORD_SECURITY:323&=?!2212LOS2sde#3as3sad32}
   application:
-    name: ms-plp-search
-
-app:
-  scheduler:
-    mongo-fixed-rate-ms: ${MONGO_FIXED_RATE_MS:180000}
+    name: ms-redis-connection
 
 
-lp:
-  cache:
-    enabled: false
 
-# Documentación Swagger/OpenAPI disponible en /swagger-ui.html
+# Documentaciï¿½n Swagger/OpenAPI disponible en /swagger-ui.html
 springdoc:
   api-docs:
     path: /api-docs

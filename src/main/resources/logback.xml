@@ -4,7 +4,7 @@
     <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
 
     <!-- Nombre del microservicio (opcional) -->
-    <property name="filename" value="ms-plp-search"/>
+    <property name="filename" value="ms-redis-connection"/>
 
     <!-- Appender principal para Cloud Run: stdout -->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
