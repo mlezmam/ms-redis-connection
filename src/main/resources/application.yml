@@ -15,7 +15,7 @@ spring:
         pool:
           max-active: ${REDIS_POOL_MAX_ACTIVE:25}
           max-idle: ${REDIS_POOL_MAX_IDLE:25}
-          min-idle: ${REDIS_POOL_MIN_IDLE:15}
+          min-idle: ${REDIS_POOL_MIN_IDLE:10}
           max-wait: ${REDIS_POOL_MAX_WAIT:500}
       timeout: ${REDIS_TIMEOUT:5000}
       ssl:
