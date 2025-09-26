@@ -87,59 +87,6 @@ spring:
 5. **String Serialization**: Efficient key/value serialization
 6. **Jackson Configuration**: Optimized JSON processing
 
-## Usage Examples
-
-### Basic String Caching
-```java
-@Service
-public class UserService {
-    
-    @Autowired
-    private CacheService cacheService;
-    
-    public String getUserName(String userId) {
-        return cacheService.get("user:" + userId, String.class)
-            .orElseGet(() -> {
-                String name = fetchFromDatabase(userId);
-                cacheService.put("user:" + userId, name, Duration.ofMinutes(15));
-                return name;
-            });
-    }
-}
-```
-
-### Complex Object Caching
-```java
-@Service
-public class ProductService {
-    
-    @Autowired
-    private CacheService cacheService;
-    
-    public ProductDto getProduct(String productId) {
-        String cacheKey = "product:" + productId;
-        
-        return cacheService.get(cacheKey, ProductDto.class)
-            .orElseGet(() -> {
-                ProductDto product = fetchProductFromDatabase(productId);
-                cacheService.put(cacheKey, product, Duration.ofHours(1));
-                return product;
-            });
-    }
-    
-    public void updateProduct(ProductDto product) {
-        // Update database
-        saveToDatabase(product);
-        
-        // Update cache
-        String cacheKey = "product:" + product.getId();
-        if (cacheService.exists(cacheKey)) {
-            cacheService.update(cacheKey, product);
-        }
-    }
-}
-```
-
 ### REST API Usage
 The service includes a REST controller for testing and direct usage:
 
@@ -154,7 +101,7 @@ Content-Type: application/json
 }
 
 # Retrieve a value
-GET /api/v1/cache/my-key?type=com.liverpool.dto.SampleDto
+GET /api/v1/cache/my-key
 
 # Update a value
 PUT /api/v1/cache/my-key?ttlSeconds=600
